@@ -1,0 +1,315 @@
+<main class="bg-gray-100 py-6 dark:bg-slate-900">
+  <div class="container">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <form [formGroup]="earningsForm">
+        <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+          <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+            Sneaker Configuration
+          </h2>
+          <div class="mb-2">
+            <label
+              for="quality"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Quality
+            </label>
+            <select
+              id="quality"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-70 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              formControlName="quality"
+            >
+              @for (quality of sneakerQualities; track $index) {
+                <option [value]="quality">{{ quality }}</option>
+              }
+            </select>
+          </div>
+          <div class="mb-2">
+            <label
+              for="type"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Type
+            </label>
+            <select
+              id="type"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              formControlName="type"
+            >
+              @for (type of sneakerTypes; track $index) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+          </div>
+          <div class="mb-2">
+            <label
+              for="level"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Level:
+            </label>
+            <input
+              type="number"
+              id="level"
+              min="0"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              placeholder="0-20"
+              formControlName="level"
+              required
+            />
+            @if (
+              levelControl &&
+              levelControl.invalid &&
+              (levelControl.dirty || levelControl.touched)
+            ) {
+              @if (levelControl.hasError("required")) {
+                <span class="text-sm font-semibold text-red-700">
+                  Sneaker level is mandatory
+                </span>
+              }
+              @if (
+                levelControl.hasError("min") ||
+                levelControl.hasError("levelExceeded")
+              ) {
+                <span class="text-sm font-semibold text-red-700">
+                  Sneaker level must be between 0 and
+                  {{ sneaker().quality.maxLevel }}
+                </span>
+              }
+            }
+          </div>
+          <div>
+            <table
+              class="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right"
+            >
+              <thead
+                class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+              >
+                <tr>
+                  <th scope="col" class="p-2">Attributes</th>
+                  <th scope="col" class="p-2">Base</th>
+                  <th scope="col" class="p-2">Level Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800"
+                >
+                  <th scope="row" class="whitespace-nowrap p-2 font-medium">
+                    <div class="flex items-center gap-2">
+                      <div class="aspect-square w-[25px]">
+                        <img
+                          src="assets/efficiency-icon.svg"
+                          alt="efficiency"
+                        />
+                      </div>
+                      Efficiency
+                      <button
+                        type="button"
+                        class="rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-900 disabled:cursor-not-allowed disabled:opacity-70"
+                        (click)="onMaxPoints('Efficiency')"
+                        [disabled]="totalPoints() === 0"
+                      >
+                        Max Points
+                      </button>
+                    </div>
+                  </th>
+                  <td class="w-20 p-2">
+                    <input
+                      type="number"
+                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                      placeholder="1-10"
+                      min="1"
+                      max="10"
+                      formControlName="efficiency"
+                      required
+                    />
+                  </td>
+                  <td class="w-20 p-2">
+                    <input
+                      type="number"
+                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-70 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                      [placeholder]="'0-' + totalPoints()"
+                      formControlName="efficiencyLevelPoints"
+                      required
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="mt-2 flex items-center gap-2">
+              <p class="text-sm font-bold text-slate-900 dark:text-white">
+                Total points: {{ totalPoints() }}
+              </p>
+              <button
+                type="button"
+                class="rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-900 disabled:cursor-not-allowed disabled:opacity-70"
+                (click)="onResetPoints()"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+          <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+            Energy Configuration
+          </h2>
+          <div class="mb-2">
+            <label
+              for="energy"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Daily Energy Cap:
+            </label>
+            <input
+              type="number"
+              id="energy"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              placeholder="0-30"
+              formControlName="energy"
+              required
+            />
+            @if (
+              energyControl &&
+              energyControl.invalid &&
+              (energyControl.dirty || energyControl.touched)
+            ) {
+              @if (energyControl.hasError("required")) {
+                <span class="text-sm font-semibold text-red-700">
+                  Daily energy cap is mandatory
+                </span>
+              }
+              @if (
+                energyControl.hasError("min") || energyControl.hasError("max")
+              ) {
+                <span class="text-sm font-semibold text-red-700">
+                  Daily energy cap must be between 0 and 30
+                </span>
+              }
+            }
+          </div>
+          <div>
+            <label
+              for="fitnessLevel"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Fitness Level (%):
+            </label>
+            <input
+              type="number"
+              id="fitnessLevel"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              placeholder="0-150"
+              formControlName="fitness"
+              min="0"
+              max="150"
+              required
+            />
+            @if (
+              fitnessControl &&
+              fitnessControl.invalid &&
+              (fitnessControl.dirty || fitnessControl.touched)
+            ) {
+              @if (fitnessControl.hasError("required")) {
+                <span class="text-sm font-semibold text-red-700">
+                  Fitness level is mandatory
+                </span>
+              }
+              @if (
+                fitnessControl.hasError("min") || fitnessControl.hasError("max")
+              ) {
+                <span class="text-sm font-semibold text-red-700">
+                  Fitness level must be between 0 and 150
+                </span>
+              }
+            }
+          </div>
+        </div>
+      </form>
+
+      <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+        <div class="flex w-full justify-center">
+          <app-sneaker-card [sneaker]="sneaker()" class="max-w-sm" />
+        </div>
+        <div class="mt-6">
+          <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+            Estimated Earnings
+          </h2>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-700">
+              <div class="flex flex-row justify-between gap-4">
+                <div>
+                  <div class="font-semibold text-slate-900 dark:text-white">
+                    Daily GGT
+                  </div>
+                  <div class="text-3xl font-bold text-color-primary">
+                    {{ ggtEarnings() }}
+                  </div>
+                </div>
+                <img
+                  src="assets/token-ggt.webp"
+                  class="h-8 rounded-full"
+                  alt="GGT"
+                  title="GGT"
+                />
+              </div>
+            </div>
+            <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-700">
+              <div class="flex flex-row justify-between gap-4">
+                <div>
+                  <div class="font-semibold text-slate-900 dark:text-white">
+                    Daily USDC
+                  </div>
+                  <div class="text-3xl font-bold text-color-primary">
+                    {{ usdtEarnings() | currency: "USD" }}
+                  </div>
+                </div>
+                <img
+                  src="assets/token-usdc.webp"
+                  class="h-8 rounded-full"
+                  alt="USDC"
+                  title="USDC"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 space-y-4">
+            <div class="flex justify-between text-slate-900 dark:text-white">
+              <div
+                class="flex items-center gap-1 font-semibold"
+                data-tooltip-target="tooltip-ggt-limit"
+              >
+                GGT Limit
+                <app-info-tooltip
+                  message="This is the maximum GGT amount you can earn"
+                />
+              </div>
+              <span class="font-bold">
+                {{ maxGgt() }}
+                GGT
+              </span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="mt-4 rounded-lg bg-yellow-50 p-4 text-sm text-yellow-800 dark:bg-gray-800 dark:text-yellow-300"
+          role="alert"
+        >
+          <span class="font-medium">DISCLAIMER</span>
+          The earnings calculations are estimated. Actual values depend on
+          multiple factors (like GPS strength, moving speed and other unknown
+          parameters). For official information, check the
+          <a
+            title="StepnGO whitepaper"
+            href="https://go-whitepaper.stepn.com"
+            target="_blank"
+            rel="noreferrer"
+            class="font-semibold underline"
+          >
+            StepnGO whitepaper
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

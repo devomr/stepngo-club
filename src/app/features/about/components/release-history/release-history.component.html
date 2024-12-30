@@ -1,0 +1,5 @@
+<div class="flex flex-col divide-y">
+  @for (note of releaseNotes; track $index) {
+    <app-release-note [realeaseNote]="note" />
+  }
+</div>

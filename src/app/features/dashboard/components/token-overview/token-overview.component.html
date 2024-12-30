@@ -1,0 +1,19 @@
+<section class="bg-gray-100 py-8 dark:bg-slate-900">
+  <h2
+    class="mb-2 text-2xl font-bold tracking-tight text-slate-900 dark:text-white"
+  >
+    Overview
+  </h2>
+
+  @if (store.isLoading()) {
+    <app-loader message="Loading token data..." />
+  } @else {
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+      @for (token of store.tokens(); track token.id) {
+        @if (visibleTokens.includes(token.id)) {
+          <app-token-price-widget [token]="token" />
+        }
+      }
+    </div>
+  }
+</section>

@@ -1,0 +1,9 @@
+@if (layoutService.state.status() === "success") {
+  <div class="flex min-h-screen flex-col">
+    <app-navbar />
+    <div class="flex-1">
+      <router-outlet></router-outlet>
+    </div>
+    <app-creator-widget />
+  </div>
+}

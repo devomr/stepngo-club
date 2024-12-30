@@ -1,0 +1,35 @@
+<div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+  <div class="flex flex-row justify-between gap-4">
+    <div>
+      <div class="text-lg font-bold text-slate-900 dark:text-white">
+        {{ token()?.symbol }}
+      </div>
+      <div class="text-3xl font-bold text-color-primary">
+        {{ token()?.price | currency: "USD" }}
+      </div>
+      <div class="mt-1 flex items-center gap-1 text-sm text-gray-400">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-4"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+          />
+        </svg>
+        Updated {{ token()?.updatedDate | dateAgo }}
+      </div>
+    </div>
+    <img
+      [src]="token()?.image"
+      class="h-8 rounded-full"
+      [alt]="token()?.symbol"
+      [title]="token()?.symbol"
+    />
+  </div>
+</div>

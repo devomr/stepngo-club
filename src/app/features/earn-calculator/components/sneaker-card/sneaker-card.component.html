@@ -1,0 +1,51 @@
+<div class="bg-spotlight relative z-10 rounded-3xl p-5">
+  <span
+    class="absolute left-0 top-0 z-0 rounded-br-lg rounded-tl-3xl bg-[#BEBDBB] px-3 py-1 font-bold italic"
+  >
+    {{ sneaker().type.value.toUpperCase() }}
+  </span>
+  <div class="relative pt-10">
+    <div class="absolute left-10 font-semibold text-[#868281]">
+      LV
+      <span class="text-5xl font-bold tracking-tighter">
+        {{ sneaker().level }}
+      </span>
+    </div>
+    <img
+      [src]="sneaker().type.image"
+      alt="sneaker"
+      class="mx-auto aspect-square w-48"
+    />
+  </div>
+
+  <div class="flex justify-center gap-2">
+    <div
+      class="rounded-full bg-[#292929] px-2 py-1 font-semibold italic text-gray-400"
+    >
+      {{ sneaker().quality.value }}
+    </div>
+    <div
+      class="rounded-full bg-[#292929] px-2 py-1 font-semibold italic text-gray-400"
+    >
+      {{ sneaker().type.speed }}
+    </div>
+  </div>
+  <div class="mt-6">
+    <div class="mb-2 font-bold uppercase text-white">Attributes</div>
+    <div class="flex items-center gap-2">
+      <div class="aspect-square w-[25px]">
+        <img src="assets/efficiency-icon.svg" alt="efficiency" />
+      </div>
+      <span class="text-gray-400"> Efficiency </span>
+      <div class="h-2 w-full bg-[#03DB92]">
+        <div
+          class="h-2 bg-[#75B8FE]"
+          [style.width]="baseEfficiencyPercentage()"
+        ></div>
+      </div>
+      <span class="text-gray-200">
+        {{ totalEfficiency() }}
+      </span>
+    </div>
+  </div>
+</div>

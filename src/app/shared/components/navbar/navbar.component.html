@@ -1,0 +1,108 @@
+<nav class="relative bg-gray-50 shadow-md dark:bg-slate-950">
+  <div class="mx-auto max-w-screen-2xl px-2 sm:px-6 lg:px-8">
+    <div class="relative flex h-14 items-center justify-between">
+      <a
+        [href]="domainUrl"
+        class="flex items-center space-x-3 rtl:space-x-reverse"
+      >
+        <img
+          src="assets/stepngoclub-logo.png"
+          class="h-8 rounded-md"
+          alt="stepngoclub logo"
+        />
+        <span
+          class="self-center whitespace-nowrap text-xl font-bold text-slate-900 dark:text-white"
+        >
+          {{ appName }}
+        </span>
+      </a>
+      <div class="sm:hidden">
+        <app-theme-toggle />
+
+        <!-- Mobile menu button-->
+        <button
+          type="button"
+          class="relative inline-flex items-center justify-center rounded-md p-2 text-slate-900 transition duration-300 ease-in-out hover:scale-105 hover:bg-color-primary hover:text-white focus:outline-none dark:text-white"
+          aria-controls="mobile-menu"
+          aria-expanded="false"
+          [title]="isMenuExpanded ? 'Close menu' : 'Open menu'"
+          (click)="toggleMenu()"
+        >
+          <span class="absolute -inset-0.5"></span>
+          <span class="sr-only">
+            {{ isMenuExpanded ? "Close menu" : "Open menu" }}
+          </span>
+
+          <!-- Icon when menu is closed. -->
+          <svg
+            [ngClass]="{ block: !isMenuExpanded, hidden: isMenuExpanded }"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+            />
+          </svg>
+
+          <!-- Icon when menu is open. -->
+          <svg
+            [ngClass]="{ hidden: !isMenuExpanded, block: isMenuExpanded }"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+      <div class="hidden sm:ml-6 sm:block">
+        <div class="flex space-x-2">
+          @for (item of menuItems; track item.text) {
+            <a
+              [href]="item.link"
+              (click)="onNavLinkClick(item.text)"
+              class="rounded-md px-3 py-2 font-medium text-slate-900 transition duration-300 ease-in-out hover:scale-105 hover:bg-color-primary hover:text-white dark:text-white"
+              [title]="item.text"
+              [attr.aria-current]="item.isActive ? 'page' : null"
+            >
+              {{ item.text }}
+            </a>
+          }
+          <app-theme-toggle />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    [ngClass]="{ hidden: !isMenuExpanded, block: isMenuExpanded }"
+    class="sm:hidden"
+    id="mobile-menu"
+  >
+    <div class="space-y-1 px-2 pb-3 pt-2">
+      @for (item of menuItems; track item.text) {
+        <a
+          [href]="item.link"
+          (click)="onNavLinkClick(item.text)"
+          class="block rounded-md px-3 py-2 font-medium text-slate-900 hover:bg-color-primary hover:text-white dark:text-white"
+          [attr.aria-current]="item.isActive ? 'page' : null"
+          [title]="item.text"
+        >
+          {{ item.text }}
+        </a>
+      }
+    </div>
+  </div>
+</nav>
