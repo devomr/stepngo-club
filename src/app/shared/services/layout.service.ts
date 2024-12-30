@@ -11,17 +11,17 @@ type LayoutState = {
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LayoutService {
   state = signalState<LayoutState>({
-    theme: 'dark',
+    theme: 'light',
     status: 'loading',
     navbar: true,
     footer: true,
   });
 
-  constructor() { }
+  constructor() {}
 
   changeTheme(newTheme: AppTheme) {
     // update <html> element class

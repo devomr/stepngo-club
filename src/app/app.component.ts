@@ -27,7 +27,7 @@ export class AppComponent {
       const theme = localStorage.getItem('theme');
 
       if (!theme) {
-        this.layoutService.changeTheme('dark');
+        this.layoutService.changeTheme('light');
         return;
       }
 
