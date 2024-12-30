@@ -25,7 +25,11 @@ const TOKENS_IDS = [
  * function is complete.
  */
 export const updateTokensCurrentPrice = onSchedule(
-  { schedule: '*/10 * * * *', region: FUNCTIONS_DEPLOYMENT_REGION },
+  {
+    schedule: '*/10 * * * *',
+    region: FUNCTIONS_DEPLOYMENT_REGION,
+    timeoutSeconds: 5,
+  },
 
   async () => {
     logger.info('Update tokens current price...');
