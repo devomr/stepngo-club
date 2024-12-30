@@ -16,6 +16,14 @@ const TOKENS_IDS = [
   'polygon-ecosystem-token',
 ];
 
+/**
+ * @description
+ * This function is triggered every 10 minutes and updates the
+ * current price of the tokens in the Firestore database.
+ *
+ * @returns {Promise<void>} A promise that resolves when the
+ * function is complete.
+ */
 export const updateTokensCurrentPrice = onSchedule(
   { schedule: '*/10 * * * *', region: FUNCTIONS_DEPLOYMENT_REGION },
 
@@ -52,6 +60,15 @@ export const updateTokensCurrentPrice = onSchedule(
   },
 );
 
+/**
+ * @description
+ * Fetches the current price of the tokens from the CoinGecko API.
+ *
+ * @param {string[]} tokenIds An array of token IDs to fetch prices for.
+ *
+ * @return {Promise<any>} A promise that resolves to the token
+ * prices or null if an error occurs.
+ */
 async function fetchTokensPrice(tokenIds: string[]) {
   const tokens = tokenIds.join(',');
   const url = `https://api.coingecko.com/api/v3/simple/price?ids=${tokens}&vs_currencies=usd`;
