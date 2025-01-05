@@ -1,20 +1,28 @@
-<div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+<div
+  class="rounded-lg bg-white p-4 shadow-md transition-transform duration-300 ease-in-out dark:bg-slate-800 md:hover:scale-105"
+>
   <div class="flex flex-row justify-between gap-4">
     <div>
-      <div class="text-lg font-bold text-slate-900 dark:text-white">
-        {{ token()?.symbol }}
+      <h5 class="text-xl font-bold text-slate-900 dark:text-white">
+        {{ token().symbol }}
+      </h5>
+      <p class="text-sm text-gray-400">
+        {{ token().name }}
+      </p>
+      <div class="my-2 flex items-center gap-2">
+        <span class="text-4xl font-bold text-color-primary">
+          {{ token().price | currency: "USD" }}
+        </span>
+        <app-token-price-change [change]="token().change" />
       </div>
-      <div class="text-3xl font-bold text-color-primary">
-        {{ token()?.price | currency: "USD" }}
-      </div>
-      <div class="mt-1 flex items-center gap-1 text-sm text-gray-400">
+      <div class="flex items-center gap-1 text-xs text-gray-400">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           stroke-width="1.5"
           stroke="currentColor"
-          class="size-4"
+          class="size-3"
         >
           <path
             stroke-linecap="round"
@@ -22,14 +30,14 @@
             d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
           />
         </svg>
-        Updated {{ token()?.updatedDate | dateAgo }}
+        Updated {{ token().updatedDate | dateAgo }}
       </div>
     </div>
     <img
-      [src]="token()?.image"
+      [src]="token().image"
       class="h-8 rounded-full"
-      [alt]="token()?.symbol"
-      [title]="token()?.symbol"
+      [alt]="token().symbol"
+      [title]="token().symbol"
     />
   </div>
 </div>

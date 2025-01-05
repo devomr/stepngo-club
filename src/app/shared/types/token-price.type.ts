@@ -1,9 +1,10 @@
-type TokenPrice = {
+type TokenData = {
   id: string;
   price: number;
+  change: number;
 };
 
-export type TokenPriceResponse = {
-  tokenPrices: TokenPrice[];
+export type TokenDataResponse = {
+  tokenData: TokenData[];
   updatedDate: Date;
 };

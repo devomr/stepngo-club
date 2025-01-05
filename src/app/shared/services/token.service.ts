@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { doc, Firestore, getDoc } from '@angular/fire/firestore';
-import { TokenPriceResponse } from '@shared/types/token-price.type';
+import { TokenDataResponse } from '@shared/types/token-price.type';
 import { Token } from '@shared/types/token.type';
 
 // declare tokens
@@ -9,6 +9,7 @@ export const usdc: Token = {
   name: 'USDC',
   symbol: 'USDC',
   price: 0,
+  change: 0,
   image: 'assets/token-usdc.webp',
 };
 
@@ -17,6 +18,7 @@ export const ggt: Token = {
   name: 'Go Game Token',
   symbol: 'GGT',
   price: 0,
+  change: 0,
   image: 'assets/token-ggt.webp',
 };
 
@@ -25,6 +27,7 @@ export const gmt: Token = {
   name: 'Green Metaverse Tokens',
   symbol: 'GMT',
   price: 0,
+  change: 0,
   image: 'assets/token-gmt.webp',
 };
 
@@ -33,6 +36,7 @@ export const pol: Token = {
   name: 'Polygon',
   symbol: 'POL',
   price: 0,
+  change: 0,
   image: 'assets/token-pol.webp',
 };
 
@@ -47,45 +51,47 @@ export class TokenService {
   constructor() {}
 
   async getTokensWithPrice(): Promise<Token[]> {
-    const tokensPrice = await this.getTokensPrice();
+    const response = await this.getTokensData();
 
     return AVAILABLE_TOKENS.map((token) => {
-      const tokenPrice = tokensPrice.tokenPrices.find((t) => t.id === token.id);
+      const tokenPrice = response.tokenData.find((t) => t.id === token.id);
 
       return {
         ...token,
         price: tokenPrice?.price ?? 0,
-        updatedDate: tokensPrice.updatedDate,
+        change: tokenPrice?.change ?? 0,
+        updatedDate: response.updatedDate,
       };
     });
   }
 
-  async getTokensPrice(): Promise<TokenPriceResponse> {
-    const tokensPriceDocumentReference = doc(
+  async getTokensData(): Promise<TokenDataResponse> {
+    const tokensDataDocumentReference = doc(
       this.firestore,
-      '/TOKENS_PRICE/current',
+      '/TOKENS_DATA/current',
     );
-    const document = await getDoc(tokensPriceDocumentReference);
+    const document = await getDoc(tokensDataDocumentReference);
     const data = document.data();
 
     if (!data) {
       return {
-        tokenPrices: [],
+        tokenData: [],
         updatedDate: new Date(),
       };
     }
 
     const tokens = data['tokens'];
 
-    const prices = Object.keys(tokens).map((token) => {
+    const tokenData = Object.keys(tokens).map((token) => {
       return {
         id: token,
         price: tokens[token].usd,
+        change: tokens[token].usd_24h_change,
       };
     });
 
     return {
-      tokenPrices: prices,
+      tokenData: tokenData,
       updatedDate: data['updatedDate'].toDate(),
     };
   }

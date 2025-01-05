@@ -2,6 +2,7 @@ import { defineString } from 'firebase-functions/params';
 import { logger } from 'firebase-functions/v2';
 import { HttpsError } from 'firebase-functions/https';
 import { getFirestore, Timestamp } from 'firebase-admin/firestore';
+import { TokenData } from '../types/token-data.type';
 import { onSchedule } from 'firebase-functions/scheduler';
 
 // Define required parameters
@@ -20,12 +21,12 @@ const TOKENS_IDS = [
 /**
  * @description
  * This function is triggered every 10 minutes and updates the
- * current price of the tokens in the Firestore database.
+ * tokens data in the Firestore database.
  *
  * @returns {Promise<void>} A promise that resolves when the
  * function is complete.
  */
-export const updateTokensCurrentPrice = onSchedule(
+export const updateTokensData = onSchedule(
   {
     schedule: '*/10 * * * *',
     region: FUNCTIONS_DEPLOYMENT_REGION,
@@ -33,34 +34,25 @@ export const updateTokensCurrentPrice = onSchedule(
   },
 
   async () => {
-    logger.info('Update tokens current price...');
+    logger.info('Update tokens data...');
 
-    const tokensPrice = await fetchTokensPrice(TOKENS_IDS);
+    const tokensData = await fetchTokensData(TOKENS_IDS);
 
-    if (!tokensPrice) {
-      // do not override the previous prices if no response is available
-      logger.info('Tokens price not available...');
+    if (!tokensData) {
+      // do not override the previous data if no response is available
+      logger.info('Tokens data not available...');
       return;
     }
 
     try {
-      const payload = {
-        tokens: tokensPrice,
-        updatedDate: Timestamp.now(),
-      };
-
-      await getFirestore()
-        .collection('TOKENS_PRICE')
-        .doc('current')
-        .set(payload);
-
-      logger.info('Token current price updated successfully...');
+      await storeTokensData(tokensData);
+      logger.info('Tokens data updated successfully...');
     } catch (error) {
       logger.error(error);
 
       throw new HttpsError(
         'internal',
-        'An error occurred while updating token current price',
+        'An error occurred while updating tokens data',
       );
     }
   },
@@ -68,17 +60,20 @@ export const updateTokensCurrentPrice = onSchedule(
 
 /**
  * @description
- * Fetches the current price of the tokens from the CoinGecko API.
+ * Fetches the tokens data from the CoinGecko API. The following data is retrieved:
+ * * token price (USD)
+ * * 24-hour price change percentage (USD)
  *
- * @param {string[]} tokenIds An array of token IDs to fetch prices for.
+ * @param {string[]} tokenIds An array of token IDs to fetch data for.
  *
- * @return {Promise<any>} A promise that resolves to the token
- * prices or null if an error occurs.
+ * @return {Promise<TokenData | null>} A promise that resolves to the token
+ * data or null if an error occurs.
  */
-async function fetchTokensPrice(tokenIds: string[]) {
+async function fetchTokensData(tokenIds: string[]): Promise<TokenData | null> {
   const baseUrl = new URL('https://api.coingecko.com/api/v3/simple/price');
   baseUrl.searchParams.append('ids', tokenIds.join(','));
   baseUrl.searchParams.append('vs_currencies', 'usd');
+  baseUrl.searchParams.append('include_24hr_change', 'true');
   baseUrl.searchParams.append('x_cg_demo_api_key', COINGECKO_API_KEY.value());
 
   const options = { method: 'GET', headers: { accept: 'application/json' } };
@@ -97,4 +92,17 @@ async function fetchTokensPrice(tokenIds: string[]) {
     logger.error('Error fetching tokens price:', error);
     return null;
   }
+}
+
+/**
+ * Store token data in Firestore
+ * @param data Token data to store
+ */
+async function storeTokensData(data: TokenData) {
+  const payload = {
+    tokens: data,
+    updatedDate: Timestamp.now(),
+  };
+
+  await getFirestore().collection('TOKENS_DATA').doc('current').set(payload);
 }

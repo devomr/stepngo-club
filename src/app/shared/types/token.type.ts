@@ -4,5 +4,6 @@ export type Token = {
   symbol: string;
   image: string;
   price: number;
+  change: number;
   updatedDate?: Date;
 };

@@ -15,4 +15,4 @@ setGlobalOptions({ maxInstances: 1 });
 // initilize firebase app
 initializeApp();
 
-export * from './update_tokens_current_price/index';
+export * from './update_tokens_data/index';

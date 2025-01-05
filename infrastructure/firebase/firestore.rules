@@ -8,8 +8,8 @@ service cloud.firestore {
       allow read, write: if false;
     }
 
-    // Allow read access to the specific document `/TOKENS_PRICE/current`
-    match /TOKENS_PRICE/current {
+    // Allow read access to the specific document `/TOKENS_DATA/current`
+    match /TOKENS_DATA/current {
       allow read: if true;
     }
   }
