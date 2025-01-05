@@ -4,11 +4,17 @@ import { RouterOutlet } from '@angular/router';
 import { NavbarComponent } from '@shared/components/navbar/navbar.component';
 import { LayoutService } from '@shared/services/layout.service';
 import { CreatorWidgetComponent } from '@shared/components/creator-widget/creator-widget.component';
+import { GiftBagBannerComponent } from './features/gift-bag/components/gift-bag-banner/gift-bag-banner.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent, CreatorWidgetComponent],
+  imports: [
+    RouterOutlet,
+    NavbarComponent,
+    CreatorWidgetComponent,
+    GiftBagBannerComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

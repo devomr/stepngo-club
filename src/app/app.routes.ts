@@ -26,6 +26,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'gift-bag',
+    title: 'GIFT_BAG_PAGE',
+    loadComponent: () =>
+      import('./features/gift-bag/gift-bag.component').then(
+        (x) => x.GiftBagComponent,
+      ),
+  },
+  {
     path: 'about',
     title: 'ABOUT_PAGE',
     loadComponent: () =>

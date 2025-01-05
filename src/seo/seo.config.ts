@@ -59,6 +59,20 @@ export const SEO_CONFIG = {
       priority: '0.7',
       changeFrequency: 'daily',
     },
+    GIFT_BAG_PAGE: {
+      title: 'Gift Bag',
+      description: APP_DESCRIPTION,
+      image: {
+        url: 'assets/stepngoclub-cover.png',
+        type: 'image/png',
+        width: '1280',
+        height: '720',
+        alt: 'stepngoclub image cover',
+      },
+      url: 'gift-bag',
+      priority: '0.7',
+      changeFrequency: 'daily',
+    },
     ABOUT_PAGE: {
       title: 'About',
       description: APP_DESCRIPTION,

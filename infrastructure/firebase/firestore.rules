@@ -12,5 +12,10 @@ service cloud.firestore {
     match /TOKENS_DATA/current {
       allow read: if true;
     }
+
+    // Allow read access to the specific document `/GIFT_BAG/current`
+    match /GIFT_BAG/current {
+      allow read: if true;
+    }
   }
 }
