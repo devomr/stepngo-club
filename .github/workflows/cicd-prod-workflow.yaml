@@ -82,6 +82,7 @@ jobs:
       # Firebase required variables
       FIREBASE_CONFIG: "${{ secrets.PROD_FIREBASE_CONFIG }}"
       FIREBASE_FUNCTIONS_DEPLOYMENT_REGION: "${{ secrets.PROD_FB_FUNCTIONS_DEPLOYMENT_REGION }}"
+      COINGECKO_API_KEY: "${{ secrets.PROD_COINGECKO_API_KEY }}"
 
       # Application variables
       APP_NAME: "${{ vars.APP_NAME }}"
@@ -113,6 +114,7 @@ jobs:
           cd functions
           touch .env.prod
           echo "FB_FUNCTIONS_DEPLOYMENT_REGION=${{ env.FIREBASE_FUNCTIONS_DEPLOYMENT_REGION }}" >> .env.prod
+          echo "COINGECKO_API_KEY=${{ env.COINGECKO_API_KEY }}" >> .env.prod
           cd ..
 
       - name: Install Cloud Functions dependencies

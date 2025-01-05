@@ -8,6 +8,7 @@ import { onSchedule } from 'firebase-functions/scheduler';
 const FUNCTIONS_DEPLOYMENT_REGION = defineString(
   'FB_FUNCTIONS_DEPLOYMENT_REGION',
 );
+const COINGECKO_API_KEY = defineString('COINGECKO_API_KEY');
 
 const TOKENS_IDS = [
   'usd-coin',
@@ -38,6 +39,7 @@ export const updateTokensCurrentPrice = onSchedule(
 
     if (!tokensPrice) {
       // do not override the previous prices if no response is available
+      logger.info('Tokens price not available...');
       return;
     }
 
@@ -74,12 +76,21 @@ export const updateTokensCurrentPrice = onSchedule(
  * prices or null if an error occurs.
  */
 async function fetchTokensPrice(tokenIds: string[]) {
-  const tokens = tokenIds.join(',');
-  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${tokens}&vs_currencies=usd`;
+  const baseUrl = new URL('https://api.coingecko.com/api/v3/simple/price');
+  baseUrl.searchParams.append('ids', tokenIds.join(','));
+  baseUrl.searchParams.append('vs_currencies', 'usd');
+  baseUrl.searchParams.append('x_cg_demo_api_key', COINGECKO_API_KEY.value());
+
   const options = { method: 'GET', headers: { accept: 'application/json' } };
 
   try {
-    const response = await fetch(url, options);
+    const response = await fetch(baseUrl.toString(), options);
+
+    if (response.status !== 200) {
+      logger.error('API response error', response.status, response.statusText);
+      return null;
+    }
+
     const json = await response.json();
     return json;
   } catch (error) {
