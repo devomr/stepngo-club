@@ -59,6 +59,20 @@ export const SEO_CONFIG = {
       priority: '0.7',
       changeFrequency: 'daily',
     },
+    CHEAT_SHEET_PAGE: {
+      title: 'Cheat Sheet',
+      description: APP_DESCRIPTION,
+      image: {
+        url: 'assets/stepngoclub-cover.png',
+        type: 'image/png',
+        width: '1280',
+        height: '720',
+        alt: 'stepngoclub image cover',
+      },
+      url: 'cheat-sheet',
+      priority: '0.7',
+      changeFrequency: 'daily',
+    },
     GIFT_BAG_PAGE: {
       title: 'Gift Bag',
       description: APP_DESCRIPTION,

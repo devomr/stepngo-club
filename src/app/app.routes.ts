@@ -26,6 +26,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'cheat-sheet',
+    title: 'CHEAT_SHEET_PAGE',
+    loadComponent: () =>
+      import('./features/cheat-sheet/cheat-sheet.component').then(
+        (x) => x.CheatSheetComponent,
+      ),
+  },
+  {
     path: 'gift-bag',
     title: 'GIFT_BAG_PAGE',
     loadComponent: () =>

@@ -16,7 +16,7 @@
           {{ appName }}
         </span>
       </a>
-      <div class="sm:hidden">
+      <div class="lg:hidden">
         <app-theme-toggle />
 
         <!-- Mobile menu button-->
@@ -68,7 +68,7 @@
           </svg>
         </button>
       </div>
-      <div class="hidden sm:ml-6 sm:block">
+      <div class="hidden lg:ml-6 lg:block">
         <div class="flex space-x-2">
           @for (item of menuItems; track item.text) {
             <a
@@ -88,7 +88,7 @@
   </div>
   <div
     [ngClass]="{ hidden: !isMenuExpanded, block: isMenuExpanded }"
-    class="sm:hidden"
+    class="lg:hidden"
     id="mobile-menu"
   >
     <div class="space-y-1 px-2 pb-3 pt-2">

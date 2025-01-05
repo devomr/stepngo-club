@@ -41,6 +41,11 @@ export class NavbarComponent {
       link: 'converter',
     },
     {
+      text: 'Cheat Sheet',
+      isActive: false,
+      link: 'cheat-sheet',
+    },
+    {
       text: 'About',
       isActive: false,
       link: 'about',
