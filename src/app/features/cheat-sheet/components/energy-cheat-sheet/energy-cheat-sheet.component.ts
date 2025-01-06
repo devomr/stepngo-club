@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { AlertComponent } from '@shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-energy-cheat-sheet',
   standalone: true,
-  imports: [],
+  imports: [AlertComponent],
   templateUrl: './energy-cheat-sheet.component.html',
   styleUrl: './energy-cheat-sheet.component.css',
 })

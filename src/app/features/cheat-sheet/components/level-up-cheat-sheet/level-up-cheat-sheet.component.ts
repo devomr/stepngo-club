@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { AlertComponent } from '@shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-level-up-cheat-sheet',
   standalone: true,
-  imports: [],
+  imports: [AlertComponent],
   templateUrl: './level-up-cheat-sheet.component.html',
   styleUrl: './level-up-cheat-sheet.component.css',
 })
