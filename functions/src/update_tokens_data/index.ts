@@ -60,7 +60,8 @@ export const updateTokensData = onSchedule(
 
 /**
  * @description
- * Fetches the tokens data from the CoinGecko API. The following data is retrieved:
+ * Fetches the tokens data from the CoinGecko API.
+ * The following data is retrieved:
  * * token price (USD)
  * * 24-hour price change percentage (USD)
  *
@@ -96,7 +97,7 @@ async function fetchTokensData(tokenIds: string[]): Promise<TokenData | null> {
 
 /**
  * Store token data in Firestore
- * @param data Token data to store
+ * @param {TokenData} data Token data to store
  */
 async function storeTokensData(data: TokenData) {
   const payload = {
