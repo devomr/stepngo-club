@@ -4,6 +4,15 @@ import { ReleaseNoteComponent } from '../release-note/release-note.component';
 
 const releaseNotes: ReleaseNote[] = [
   {
+    version: '0.0.2',
+    date: new Date('2024-01-06'),
+    features: ['Gift Bag codes', 'Cheat Sheet section'],
+    improvements: [
+      'Add token name and 24-hour price change percentage in token price widgets',
+    ],
+    fixes: [],
+  },
+  {
     version: '0.0.1',
     date: new Date('2024-12-30'),
     features: [
