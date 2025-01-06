@@ -2,15 +2,14 @@
   class="flex flex-col items-center gap-2 bg-color-primary p-2 text-white md:flex-row md:justify-center"
 >
   <p class="text-center">
-    🎁 <strong>New to StepnGO?</strong> Use the Gift Bag code
-    <span class="inline-block rounded-lg border-white/25 bg-white/25 px-2 py-1">
-      @if (store.isLoading()) {
-        Loading...
-      } @else {
-        {{ store.code() }}
-      }
-    </span>
-    and start using StepnGO now
+    🎁 <strong>New to StepnGO?</strong> Use a Gift Bag code and start earning
+    rewards
   </p>
-  <a href="/gift-bag" class="underline" title="Read more"> Read more </a>
+  <a
+    href="/gift-bag"
+    class="inline-block rounded-lg border-white/25 bg-white/25 px-2 py-1"
+    title="Read more"
+  >
+    Read more
+  </a>
 </div>
