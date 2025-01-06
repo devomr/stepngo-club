@@ -1,4 +1,6 @@
 /
 /dashboard
 /converter
+/cheat-sheet
+/gift-bag
 /about
