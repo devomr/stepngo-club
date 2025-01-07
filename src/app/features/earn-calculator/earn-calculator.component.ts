@@ -8,20 +8,15 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CurrencyPipe } from '@angular/common';
 import { SneakerCardComponent } from './components/sneaker-card/sneaker-card.component';
-import { Sneaker } from './types/sneaker.type';
+import { Sneaker } from '@shared/types/sneaker.type';
 import {
   COMMON_SNEAKER,
   SNEAKER_QUALITIES,
-  SneakerQuality,
-} from './types/sneaker-quality.type';
-import {
-  SNEAKER_TYPES,
-  SneakerType,
-  WALKER_SNEAKER,
-} from './types/sneaker-type.type';
+} from '@shared/types/sneaker-quality.type';
+import { SNEAKER_TYPES, WALKER_SNEAKER } from '@shared/types/sneaker-type.type';
 import { InfoTooltipComponent } from '@shared/components/info-tooltip/info-tooltip.component';
 import { sneakerLevelValidator } from './validators/sneaker-level.validator';
-import { SneakerAttribute } from './types/sneaker-attribute.type';
+import { SneakerAttribute } from '@shared/types/sneaker-attribute.type';
 import { TokensStore } from '@shared/stores/tokens.store';
 import { ggt } from '@shared/services/token.service';
 

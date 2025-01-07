@@ -1,5 +1,5 @@
 import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
-import { SNEAKER_QUALITIES } from '../types/sneaker-quality.type';
+import { SNEAKER_QUALITIES } from '@shared/types/sneaker-quality.type';
 
 export function sneakerLevelValidator(
   qualityControl: AbstractControl,
