@@ -1,6 +1,12 @@
-import { inject } from '@angular/core';
-import { patchState, signalStore, withHooks, withState } from '@ngrx/signals';
-import { TokenService } from '@shared/services/token.service';
+import { computed, inject } from '@angular/core';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withHooks,
+  withState,
+} from '@ngrx/signals';
+import { ggt, TokenService } from '@shared/services/token.service';
 import { Token } from '@shared/types/token.type';
 
 type TokensState = {
@@ -16,6 +22,12 @@ const initialState: TokensState = {
 export const TokensStore = signalStore(
   { providedIn: 'root' },
   withState<TokensState>(initialState),
+  withComputed(({ tokens }) => ({
+    ggtPrice: computed(() => {
+      const ggtToken = tokens().find((t) => t.id === ggt.id);
+      return ggtToken?.price ?? 0;
+    }),
+  })),
   withHooks({
     onInit: async (store) => {
       const tokenService = inject(TokenService);

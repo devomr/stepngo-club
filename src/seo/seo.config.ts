@@ -31,6 +31,20 @@ export const SEO_CONFIG = {
       priority: '1.0',
       changeFrequency: 'daily',
     },
+    MINT_CALCULATOR_PAGE: {
+      title: 'Mint Calculator',
+      description: APP_DESCRIPTION,
+      image: {
+        url: 'assets/stepngoclub-cover.png',
+        type: 'image/png',
+        width: '1280',
+        height: '720',
+        alt: 'stepngoclub image cover',
+      },
+      url: 'mint-calculator',
+      priority: '1.0',
+      changeFrequency: 'daily',
+    },
     DASHBOARD_PAGE: {
       title: 'Dashboard',
       description: APP_DESCRIPTION,

@@ -1,0 +1,277 @@
+<main class="bg-gray-100 py-8 dark:bg-slate-900">
+  <div class="container">
+    <h1
+      class="mb-4 text-center text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-left md:text-3xl"
+    >
+      StepnGO Mint Calculator
+    </h1>
+
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+        <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+          Left Sneaker
+        </h2>
+        <form [formGroup]="leftSneakerForm">
+          <div class="mb-2">
+            <label
+              for="leftQuality"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Quality
+            </label>
+            <select
+              id="leftQuality"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-70 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              formControlName="quality"
+            >
+              @for (quality of sneakerQualities; track $index) {
+                <option [value]="quality">{{ quality }}</option>
+              }
+            </select>
+          </div>
+          <div class="mb-2">
+            <label
+              for="leftType"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Type
+            </label>
+            <select
+              id="leftType"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              formControlName="type"
+            >
+              @for (type of sneakerTypes; track $index) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+          </div>
+          <div>
+            <label
+              for="leftMint"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Mint {{ leftSneakerMint }}/7
+            </label>
+            <input
+              id="leftMint"
+              type="range"
+              min="0"
+              max="6"
+              value="0"
+              step="1"
+              formControlName="mint"
+              class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+        <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+          Right Sneaker
+        </h2>
+        <form [formGroup]="rightSneakerForm">
+          <div class="mb-2">
+            <label
+              for="leftQuality"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Quality
+            </label>
+            <select
+              id="leftQuality"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-70 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              formControlName="quality"
+            >
+              @for (quality of sneakerQualities; track $index) {
+                <option [value]="quality">{{ quality }}</option>
+              }
+            </select>
+          </div>
+          <div class="mb-2">
+            <label
+              for="leftType"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Type
+            </label>
+            <select
+              id="leftType"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              formControlName="type"
+            >
+              @for (type of sneakerTypes; track $index) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+          </div>
+          <div>
+            <label
+              for="leftMint"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Mint {{ rightSneakerMint }}/7
+            </label>
+            <input
+              id="leftMint"
+              type="range"
+              min="0"
+              max="6"
+              value="0"
+              step="1"
+              formControlName="mint"
+              class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="mt-4 rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+      <h2 class="text-lg font-bold text-slate-900 dark:text-white">
+        Mint Cost
+      </h2>
+      <p class="mb-2 text-sm text-gray-400">
+        Cost when you mint the sneakers configured above
+      </p>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700">
+          <div class="flex flex-row justify-between gap-4">
+            <div>
+              <div class="font-semibold text-slate-900 dark:text-white">
+                Total GGT
+              </div>
+              <div class="text-3xl font-bold text-color-primary">
+                {{ store.totalCost() }}
+              </div>
+            </div>
+            <img
+              src="assets/token-ggt.webp"
+              class="h-8 rounded-full"
+              alt="GGT"
+              title="GGT"
+            />
+          </div>
+        </div>
+        <div class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700">
+          <div class="flex flex-row justify-between gap-4">
+            <div>
+              <div class="font-semibold text-slate-900 dark:text-white">
+                Total USDC
+              </div>
+              <div class="text-3xl font-bold text-color-primary">
+                @if (tokensStore.isLoading()) {
+                  Loading...
+                } @else {
+                  {{
+                    tokensStore.ggtPrice() * store.totalCost() | currency: "USD"
+                  }}
+                }
+              </div>
+            </div>
+            <img
+              src="assets/token-usdc.webp"
+              class="h-8 rounded-full"
+              alt="USDC"
+              title="USDC"
+            />
+          </div>
+        </div>
+        <div class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700">
+          <div class="font-semibold text-slate-900 dark:text-white">
+            <div class="flex items-center gap-1 font-semibold">
+              Required mint quota
+              <app-info-tooltip
+                message="Mint Quota comes from Energy consumption"
+              />
+            </div>
+          </div>
+          <div class="text-3xl font-bold text-color-primary">2</div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-4 rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+      <h2 class="text-lg font-bold text-slate-900 dark:text-white">
+        Sneaker Type
+      </h2>
+      <p class="mb-2 text-sm text-gray-400">
+        Possible sneaker types you can receive when you mint the sneakers
+        configured above
+      </p>
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+        <div
+          class="rounded-lg bg-white p-4 text-slate-900 drop-shadow dark:bg-slate-700 dark:text-white"
+        >
+          <div class="flex flex-col items-center">
+            <img
+              src="assets/sneaker-walker-icon.png"
+              alt="walker"
+              class="aspect-square w-28"
+            />
+            <div class="text-lg font-semibold">Walker</div>
+            <div class="text-lg font-semibold">
+              {{ store.sneakerTypeResult()?.walker }}%
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg bg-white p-4 text-slate-900 drop-shadow dark:bg-slate-700 dark:text-white"
+        >
+          <div class="flex flex-col items-center">
+            <img
+              src="assets/sneaker-jogger-icon.png"
+              alt="jogger"
+              class="aspect-square w-28"
+            />
+            <div class="text-lg font-semibold">Jogger</div>
+            <div class="text-lg font-semibold">
+              {{ store.sneakerTypeResult()?.jogger }}%
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg bg-white p-4 text-slate-900 drop-shadow dark:bg-slate-700 dark:text-white"
+        >
+          <div class="flex flex-col items-center">
+            <img
+              src="assets/sneaker-runner-icon.png"
+              alt="runner"
+              class="aspect-square w-28"
+            />
+            <div class="text-lg font-semibold">Runner</div>
+            <div class="text-lg font-semibold">
+              {{ store.sneakerTypeResult()?.runner }}%
+            </div>
+          </div>
+        </div>
+        <div
+          class="rounded-lg bg-white p-4 text-slate-900 drop-shadow dark:bg-slate-700 dark:text-white"
+        >
+          <div class="flex flex-col items-center">
+            <img
+              src="assets/sneaker-trainer-icon.png"
+              alt="trainer"
+              class="aspect-square w-28"
+            />
+            <div class="text-lg font-semibold">Trainer</div>
+            <div class="text-lg font-semibold">
+              {{ store.sneakerTypeResult()?.trainer }}%
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <app-alert type="info" class="mt-2 block">
+      For official information check StepnGO whitepaper, section
+      <a
+        title="Sneaker Minting"
+        href="https://go-whitepaper.stepn.com/game-module/sneaker-minting"
+        target="_blank"
+        rel="noreferrer"
+        class="font-semibold underline"
+      >
+        Sneaker Minting
+      </a>
+    </app-alert>
+  </div>
+</main>

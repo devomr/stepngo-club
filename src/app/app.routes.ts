@@ -10,6 +10,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'mint-calculator',
+    title: 'MINT_CALCULATOR_PAGE',
+    loadComponent: () =>
+      import('./features/mint-calculator/mint-calculator.component').then(
+        (x) => x.MintCalculatorComponent,
+      ),
+  },
+  {
     path: 'dashboard',
     title: 'DASHBOARD_PAGE',
     loadComponent: () =>
