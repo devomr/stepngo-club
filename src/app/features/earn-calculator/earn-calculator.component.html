@@ -72,7 +72,7 @@
               ) {
                 <span class="text-sm font-semibold text-red-700">
                   Sneaker level must be between 0 and
-                  {{ sneaker().quality.maxLevel }}
+                  {{ earningsStore.sneaker().quality.maxLevel }}
                 </span>
               }
             }
@@ -107,7 +107,7 @@
                         type="button"
                         class="rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-900 disabled:cursor-not-allowed disabled:opacity-70"
                         (click)="onMaxPoints('Efficiency')"
-                        [disabled]="totalPoints() === 0"
+                        [disabled]="earningsStore.levelPoints() === 0"
                       >
                         Max Points
                       </button>
@@ -128,7 +128,7 @@
                     <input
                       type="number"
                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-70 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-                      [placeholder]="'0-' + totalPoints()"
+                      [placeholder]="'0-' + earningsStore.levelPoints()"
                       formControlName="efficiencyLevelPoints"
                       required
                     />
@@ -138,7 +138,7 @@
             </table>
             <div class="mt-2 flex items-center gap-2">
               <p class="text-sm font-bold text-slate-900 dark:text-white">
-                Total points: {{ totalPoints() }}
+                Total points: {{ earningsStore.levelPoints() }}
               </p>
               <button
                 type="button"
@@ -227,87 +227,109 @@
         </div>
       </form>
 
-      <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
-        <div class="flex w-full justify-center">
-          <app-sneaker-card [sneaker]="sneaker()" class="max-w-sm" />
-        </div>
-        <div class="mt-6">
-          <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
-            Estimated Earnings
-          </h2>
-          <div class="grid grid-cols-2 gap-4">
-            <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-700">
-              <div class="flex flex-row justify-between gap-4">
-                <div>
-                  <div class="font-semibold text-slate-900 dark:text-white">
-                    Daily GGT
-                  </div>
-                  <div class="text-3xl font-bold text-color-primary">
-                    {{ ggtEarnings() }}
-                  </div>
-                </div>
-                <img
-                  src="assets/token-ggt.webp"
-                  class="h-8 rounded-full"
-                  alt="GGT"
-                  title="GGT"
-                />
-              </div>
-            </div>
-            <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-700">
-              <div class="flex flex-row justify-between gap-4">
-                <div>
-                  <div class="font-semibold text-slate-900 dark:text-white">
-                    Daily USDC
-                  </div>
-                  <div class="text-3xl font-bold text-color-primary">
-                    {{ usdtEarnings() | currency: "USD" }}
-                  </div>
-                </div>
-                <img
-                  src="assets/token-usdc.webp"
-                  class="h-8 rounded-full"
-                  alt="USDC"
-                  title="USDC"
-                />
-              </div>
-            </div>
+      <div class="space-y-4">
+        <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+          <div class="flex w-full justify-center">
+            <app-sneaker-card
+              [sneaker]="earningsStore.sneaker()"
+              class="max-w-sm"
+            />
           </div>
-          <div class="mt-4 space-y-4">
-            <div class="flex justify-between text-slate-900 dark:text-white">
+          <div class="mt-6">
+            <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+              Estimated Earnings
+            </h2>
+            <div class="grid grid-cols-2 gap-4">
               <div
-                class="flex items-center gap-1 font-semibold"
-                data-tooltip-target="tooltip-ggt-limit"
+                class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700"
               >
-                GGT Limit
-                <app-info-tooltip
-                  message="This is the maximum GGT amount you can earn"
-                />
+                <div class="flex flex-row justify-between gap-4">
+                  <div>
+                    <div class="font-semibold text-slate-900 dark:text-white">
+                      Daily GGT
+                    </div>
+                    <div class="text-3xl font-bold text-color-primary">
+                      {{ earningsStore.earnings.ggt() }}
+                    </div>
+                  </div>
+                  <img
+                    src="assets/token-ggt.webp"
+                    class="h-8 rounded-full"
+                    alt="GGT"
+                    title="GGT"
+                  />
+                </div>
               </div>
-              <span class="font-bold">
-                {{ maxGgt() }}
-                GGT
-              </span>
+              <div
+                class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700"
+              >
+                <div class="flex flex-row justify-between gap-4">
+                  <div>
+                    <div class="font-semibold text-slate-900 dark:text-white">
+                      Daily USDC
+                    </div>
+                    <div class="text-3xl font-bold text-color-primary">
+                      {{
+                        tokensStore.ggtPrice() * earningsStore.earnings.ggt()
+                          | currency: "USD"
+                      }}
+                    </div>
+                  </div>
+                  <img
+                    src="assets/token-usdc.webp"
+                    class="h-8 rounded-full"
+                    alt="USDC"
+                    title="USDC"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="mt-4 space-y-4">
+              <div class="flex justify-between text-slate-900 dark:text-white">
+                <div
+                  class="flex items-center gap-1 font-semibold"
+                  data-tooltip-target="tooltip-ggt-limit"
+                >
+                  GGT Limit
+                  <app-info-tooltip
+                    message="This is the maximum GGT amount you can earn"
+                  />
+                </div>
+                <span class="font-bold">
+                  {{ earningsStore.earnings.maxGgt() }}
+                  GGT
+                </span>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          class="mt-4 rounded-lg bg-yellow-50 p-4 text-sm text-yellow-800 dark:bg-gray-800 dark:text-yellow-300"
-          role="alert"
-        >
-          <span class="font-medium">DISCLAIMER</span>
-          The earnings calculations are estimated. Actual values depend on
-          multiple factors (like GPS strength, moving speed and other unknown
-          parameters). For official information, check the
-          <a
-            title="StepnGO whitepaper"
-            href="https://go-whitepaper.stepn.com"
-            target="_blank"
-            rel="noreferrer"
-            class="font-semibold underline"
+
+          <div
+            class="mt-4 rounded-lg bg-yellow-50 p-4 text-sm text-yellow-800 dark:bg-gray-800 dark:text-yellow-300"
+            role="alert"
           >
-            StepnGO whitepaper
-          </a>
+            <span class="font-medium">DISCLAIMER</span>
+            The earnings calculations are estimated. Actual values depend on
+            multiple factors (like GPS strength, moving speed and other unknown
+            parameters). For official information, check the
+            <a
+              title="StepnGO whitepaper"
+              href="https://go-whitepaper.stepn.com"
+              target="_blank"
+              rel="noreferrer"
+              class="font-semibold underline"
+            >
+              StepnGO whitepaper
+            </a>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+          <app-sneaker-levelup
+            class="mt-4"
+            [sneaker]="earningsStore.sneaker()"
+            [dailyEnergy]="earningsStore.energy()"
+            [fitnessLevel]="earningsStore.fitnessLevel()"
+          />
         </div>
       </div>
     </div>
