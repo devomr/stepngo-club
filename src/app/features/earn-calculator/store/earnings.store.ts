@@ -1,7 +1,8 @@
-import { inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import {
   patchState,
   signalStore,
+  withComputed,
   withHooks,
   withMethods,
   withState,
@@ -44,6 +45,12 @@ const initialState: EarningsState = {
 export const EarningsStore = signalStore(
   { providedIn: 'root' },
   withState<EarningsState>(initialState),
+  withComputed(({ sneaker }) => ({
+    totalEfficiency: computed(
+      () => sneaker.efficiency() + sneaker.efficiencyLevelPoints(),
+    ),
+  })),
+
   withMethods((store, earningsService = inject(EarningsService)) => ({
     updateSneakerType(type: SneakerType) {
       patchState(store, {
@@ -107,15 +114,12 @@ export const EarningsStore = signalStore(
     },
 
     calculateEarnings() {
-      console.log('calculateEarnings');
       patchState(store, (state) => {
         const ggtEarnings = earningsService.calculateEarnings(
           state.sneaker,
           state.energy,
           state.fitnessLevel,
         );
-
-        console.log('earnings', ggtEarnings);
 
         return {
           earnings: {

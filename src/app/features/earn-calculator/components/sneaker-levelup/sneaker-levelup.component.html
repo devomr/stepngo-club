@@ -1,0 +1,43 @@
+<h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+  Sneaker Level Up
+</h2>
+
+@if (isMaxLevel()) {
+  Your sneaker has reached the maximum level 🎉
+} @else {
+  <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-4">
+    <div class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700">
+      <div class="font-semibold text-slate-900 dark:text-white">Total Cost</div>
+      <div class="text-3xl font-bold text-color-primary">
+        {{ totalCost() }} GGT
+      </div>
+    </div>
+    <div class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700">
+      <div class="font-semibold text-slate-900 dark:text-white">
+        Total Duration
+      </div>
+      <div class="text-3xl font-bold text-color-primary">
+        {{ totalMinutes() / 60 }} hours
+      </div>
+    </div>
+  </div>
+  <div class="mt-4 bg-white dark:bg-slate-700">
+    <div class="mb-2 flex items-center justify-between">
+      <h3 class="font-semibold">Detailed Level Up</h3>
+      <button
+        type="button"
+        class="rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-900 disabled:cursor-not-allowed disabled:opacity-70"
+        (click)="toggleStats()"
+      >
+        {{ statsOpen() ? "Collapse All" : "Expand All" }}
+      </button>
+    </div>
+    @for (sneakerLevel of remainingLevels(); track $index) {
+      <app-sneaker-level-stats
+        [level]="sneakerLevel"
+        [open]="statsOpen()"
+        class="space-y-1"
+      />
+    }
+  </div>
+}
