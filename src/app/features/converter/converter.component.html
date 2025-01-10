@@ -1,5 +1,10 @@
-<main class="bg-gray-100 py-6 dark:bg-slate-900">
+<main class="bg-gray-100 py-8 dark:bg-slate-900">
   <div class="container">
+    <h1
+      class="mb-4 text-center text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-left md:text-3xl"
+    >
+      Token Price Converter
+    </h1>
     @if (store.isLoading()) {
       <app-loader message="Loading token data..." />
     } @else {
