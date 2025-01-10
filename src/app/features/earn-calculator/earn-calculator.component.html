@@ -1,5 +1,10 @@
-<main class="bg-gray-100 py-6 dark:bg-slate-900">
+<main class="bg-gray-100 py-8 dark:bg-slate-900">
   <div class="container">
+    <h1
+      class="mb-4 text-center text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-left md:text-3xl"
+    >
+      StepnGO Earnings Calculator
+    </h1>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <form [formGroup]="earningsForm">
         <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
@@ -79,7 +84,7 @@
           </div>
           <div>
             <table
-              class="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right"
+              class="w-full text-left text-sm text-gray-900 dark:text-white rtl:text-right"
             >
               <thead
                 class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
@@ -95,8 +100,8 @@
                   class="odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800"
                 >
                   <th scope="row" class="whitespace-nowrap p-2 font-medium">
-                    <div class="flex items-center gap-2">
-                      <div class="aspect-square w-[25px]">
+                    <div class="flex items-center">
+                      <div class="mr-1 aspect-square w-[25px]">
                         <img
                           src="assets/efficiency-icon.svg"
                           alt="efficiency"
@@ -105,7 +110,7 @@
                       Efficiency
                       <button
                         type="button"
-                        class="rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-900 disabled:cursor-not-allowed disabled:opacity-70"
+                        class="ml-2 rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-900 disabled:cursor-not-allowed disabled:opacity-70"
                         (click)="onMaxPoints('Efficiency')"
                         [disabled]="earningsStore.levelPoints() === 0"
                       >
@@ -290,9 +295,9 @@
                   class="flex items-center gap-1 font-semibold"
                   data-tooltip-target="tooltip-ggt-limit"
                 >
-                  GGT Limit
+                  Daily GGT Limit
                   <app-info-tooltip
-                    message="This is the maximum GGT amount you can earn"
+                    message="This is the maximum GGT amount you can earn each day"
                   />
                 </div>
                 <span class="font-bold">
@@ -303,10 +308,7 @@
             </div>
           </div>
 
-          <div
-            class="mt-4 rounded-lg bg-yellow-50 p-4 text-sm text-yellow-800 dark:bg-gray-800 dark:text-yellow-300"
-            role="alert"
-          >
+          <app-alert type="warning" class="mt-4 block">
             <span class="font-medium">DISCLAIMER</span>
             The earnings calculations are estimated. Actual values depend on
             multiple factors (like GPS strength, moving speed and other unknown
@@ -320,7 +322,7 @@
             >
               StepnGO whitepaper
             </a>
-          </div>
+          </app-alert>
         </div>
 
         <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">

@@ -19,6 +19,7 @@ import { SneakerAttribute } from '@shared/types/sneaker-attribute.type';
 import { TokensStore } from '@shared/stores/tokens.store';
 import { SneakerLevelupComponent } from './components/sneaker-levelup/sneaker-levelup.component';
 import { EarningsStore } from './store/earnings.store';
+import { AlertComponent } from '@shared/components/alert/alert.component';
 
 @Component({
   selector: 'app-earn-calculator',
@@ -29,6 +30,7 @@ import { EarningsStore } from './store/earnings.store';
     SneakerCardComponent,
     InfoTooltipComponent,
     SneakerLevelupComponent,
+    AlertComponent,
   ],
   templateUrl: './earn-calculator.component.html',
   styleUrl: './earn-calculator.component.css',
