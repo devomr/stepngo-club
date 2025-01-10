@@ -3,4 +3,6 @@
 /converter
 /cheat-sheet
 /gift-bag
+/haus-calculator
+/mint-calculator
 /about

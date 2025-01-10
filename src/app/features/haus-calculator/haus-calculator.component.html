@@ -1,0 +1,246 @@
+<main class="bg-gray-100 py-6 dark:bg-slate-900">
+  <div class="container">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <form [formGroup]="hausForm">
+        <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+          <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+            Sneaker Configuration
+          </h2>
+          <div class="mb-2">
+            <label
+              for="type"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Type
+            </label>
+            <select
+              id="type"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              formControlName="type"
+            >
+              @for (type of sneakerTypes; track $index) {
+                <option [value]="type">{{ type }}</option>
+              }
+            </select>
+          </div>
+          <div class="mb-2">
+            <label
+              for="efficiency"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Total Efficiency
+            </label>
+            <input
+              id="efficiency"
+              type="number"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              placeholder="1-90"
+              min="1"
+              max="90"
+              formControlName="efficiency"
+              required
+            />
+            @if (
+              effciencyControl &&
+              effciencyControl.invalid &&
+              (effciencyControl.dirty || effciencyControl.touched)
+            ) {
+              @if (effciencyControl.hasError("required")) {
+                <span class="text-sm font-semibold text-red-700">
+                  Total efficiency is mandatory
+                </span>
+              }
+              @if (
+                effciencyControl.hasError("min") ||
+                effciencyControl.hasError("max")
+              ) {
+                <span class="text-sm font-semibold text-red-700">
+                  Total efficiency must be between 1 and 90
+                </span>
+              }
+            }
+          </div>
+        </div>
+        <div class="mt-4 rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+          <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+            HAUS Contract
+          </h2>
+          <div class="mb-2">
+            <label
+              for="energy"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Daily Energy Shared:
+            </label>
+            <select
+              id="energy"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-70 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              formControlName="energy"
+              required
+            >
+              <option value="2" [defaultSelected]="true">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+            </select>
+          </div>
+          <div class="mb-2">
+            <label
+              for="duration"
+              class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+            >
+              Duration:
+            </label>
+            <select
+              id="duration"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-70 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              formControlName="duration"
+              required
+            >
+              <option value="14" [defaultSelected]="true">2 weeks</option>
+              <option value="21">3 weeks</option>
+              <option value="28">4 weeks</option>
+            </select>
+          </div>
+          <div>
+            <div class="flex justify-between gap-2">
+              <label
+                for="profit"
+                class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
+              >
+                Profit Share
+              </label>
+              <div
+                class="flex gap-3 font-semibold text-slate-900 dark:text-white"
+              >
+                <span class="font-semibold text-[#1ba398]">
+                  {{ hostProfit }}% Me
+                </span>
+                :
+                <span class="font-semibold text-color-primary">
+                  {{ 100 - (hostProfit ?? 0) }}% Friend
+                </span>
+              </div>
+            </div>
+            <input
+              id="profit"
+              type="range"
+              min="0"
+              max="100"
+              value="90"
+              step="10"
+              formControlName="profit"
+              class="h-2 w-full cursor-pointer appearance-none rounded-lg bg-gray-200 dark:bg-gray-700"
+            />
+          </div>
+        </div>
+      </form>
+
+      <div class="space-y-4">
+        <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+          <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+            Host Earnings
+          </h2>
+          <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-4">
+            <div class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700">
+              <div class="flex flex-row justify-between gap-4">
+                <div>
+                  <div class="font-semibold text-slate-900 dark:text-white">
+                    Daily GGT
+                  </div>
+                  <div class="text-3xl font-bold text-color-primary">
+                    {{ hausStore.hostDailyEarnings().toFixed(2) }} ({{
+                      (
+                        tokensStore.ggtPrice() * hausStore.hostDailyEarnings()
+                      ).toFixed(2) | currency: "USD"
+                    }})
+                  </div>
+                </div>
+                <img
+                  src="assets/token-ggt.webp"
+                  class="h-8 rounded-full"
+                  alt="GGT"
+                  title="GGT"
+                />
+              </div>
+            </div>
+            <div class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700">
+              <div class="flex flex-row justify-between gap-4">
+                <div>
+                  <div class="font-semibold text-slate-900 dark:text-white">
+                    Total GGT ({{ hausStore.durationWeeks() }}
+                    weeks)
+                  </div>
+                  <div class="text-3xl font-bold text-color-primary">
+                    {{ hausStore.hostTotalEarnings().toFixed(2) }} ({{
+                      (
+                        tokensStore.ggtPrice() * hausStore.hostTotalEarnings()
+                      ).toFixed(2) | currency: "USD"
+                    }})
+                  </div>
+                </div>
+                <img
+                  src="assets/token-ggt.webp"
+                  class="h-8 rounded-full"
+                  alt="GGT"
+                  title="GGT"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
+          <h2 class="mb-2 text-lg font-bold text-slate-900 dark:text-white">
+            Guest Earnings
+          </h2>
+          <div class="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-4">
+            <div class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700">
+              <div class="flex flex-row justify-between gap-4">
+                <div>
+                  <div class="font-semibold text-slate-900 dark:text-white">
+                    Daily GGT
+                  </div>
+                  <div class="text-3xl font-bold text-color-primary">
+                    {{ hausStore.guestDailyEarnings().toFixed(2) }} ({{
+                      (
+                        tokensStore.ggtPrice() * hausStore.guestDailyEarnings()
+                      ).toFixed(2) | currency: "USD"
+                    }})
+                  </div>
+                </div>
+                <img
+                  src="assets/token-ggt.webp"
+                  class="h-8 rounded-full"
+                  alt="GGT"
+                  title="GGT"
+                />
+              </div>
+            </div>
+            <div class="rounded-lg bg-white p-4 drop-shadow dark:bg-slate-700">
+              <div class="flex flex-row justify-between gap-4">
+                <div>
+                  <div class="font-semibold text-slate-900 dark:text-white">
+                    Total GGT ({{ hausStore.durationWeeks() }}
+                    weeks)
+                  </div>
+                  <div class="text-3xl font-bold text-color-primary">
+                    {{ hausStore.guestTotalEarnings().toFixed(2) }} ({{
+                      (
+                        tokensStore.ggtPrice() * hausStore.guestTotalEarnings()
+                      ).toFixed(2) | currency: "USD"
+                    }})
+                  </div>
+                </div>
+                <img
+                  src="assets/token-ggt.webp"
+                  class="h-8 rounded-full"
+                  alt="GGT"
+                  title="GGT"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

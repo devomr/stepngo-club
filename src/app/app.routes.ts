@@ -18,6 +18,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'haus-calculator',
+    title: 'HAUS_CALCULATOR_PAGE',
+    loadComponent: () =>
+      import('./features/haus-calculator/haus-calculator.component').then(
+        (x) => x.HausCalculatorComponent,
+      ),
+  },
+  {
     path: 'dashboard',
     title: 'DASHBOARD_PAGE',
     loadComponent: () =>

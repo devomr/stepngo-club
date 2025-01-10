@@ -45,6 +45,20 @@ export const SEO_CONFIG = {
       priority: '1.0',
       changeFrequency: 'daily',
     },
+    HAUS_CALCULATOR_PAGE: {
+      title: 'HAUS Calculator',
+      description: APP_DESCRIPTION,
+      image: {
+        url: 'assets/stepngoclub-cover.png',
+        type: 'image/png',
+        width: '1280',
+        height: '720',
+        alt: 'stepngoclub image cover',
+      },
+      url: 'haus-calculator',
+      priority: '1.0',
+      changeFrequency: 'daily',
+    },
     DASHBOARD_PAGE: {
       title: 'Dashboard',
       description: APP_DESCRIPTION,
