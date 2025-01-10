@@ -21,9 +21,11 @@
       </div>
     </div>
   </div>
-  <div class="mt-4 bg-white dark:bg-slate-700">
+  <div class="mt-4">
     <div class="mb-2 flex items-center justify-between">
-      <h3 class="font-semibold">Detailed Level Up</h3>
+      <h3 class="font-semibold text-slate-900 dark:text-white">
+        Detailed Level Up
+      </h3>
       <button
         type="button"
         class="rounded-lg border border-gray-300 bg-white px-2 py-1 text-sm font-medium text-gray-900 disabled:cursor-not-allowed disabled:opacity-70"
@@ -36,7 +38,7 @@
       <app-sneaker-level-stats
         [level]="sneakerLevel"
         [open]="statsOpen()"
-        class="space-y-1"
+        class="space-y-2"
       />
     }
   </div>

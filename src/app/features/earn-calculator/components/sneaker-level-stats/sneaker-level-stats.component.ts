@@ -10,7 +10,7 @@ import { AlertComponent } from '@shared/components/alert/alert.component';
 @Component({
   selector: 'app-sneaker-level-stats',
   standalone: true,
-  imports: [CommonModule, TrendBadgeComponent, AlertComponent],
+  imports: [TrendBadgeComponent, AlertComponent],
   templateUrl: './sneaker-level-stats.component.html',
   styleUrl: './sneaker-level-stats.component.css',
 })

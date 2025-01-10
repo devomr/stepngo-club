@@ -24,6 +24,16 @@
   }
 }
 
+@layer components {
+  .alert-info {
+    @apply bg-blue-50 text-blue-800 dark:bg-gray-800 dark:text-blue-400;
+  }
+
+  .alert-warning {
+    @apply bg-yellow-50 text-yellow-800 dark:bg-gray-800 dark:text-yellow-300;
+  }
+}
+
 /* Scrollbar style */
 ::-webkit-scrollbar {
   width: 10px;

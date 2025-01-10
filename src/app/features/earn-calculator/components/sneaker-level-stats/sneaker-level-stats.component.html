@@ -1,10 +1,6 @@
 <button
   title="Level {{ level().level }}"
-  class="flex w-full items-center justify-between rounded-md p-2 text-left text-slate-900 drop-shadow dark:text-white"
-  [ngClass]="{
-    'bg-gray-100 dark:bg-slate-800': open(),
-    'bg-white dark:bg-slate-700': !open(),
-  }"
+  class="flex w-full items-center justify-between rounded-md bg-gray-50 p-2 text-left text-slate-900 drop-shadow dark:bg-slate-700 dark:text-white"
   (click)="toggle()"
 >
   <span class="font-medium"> Level {{ level().level }} </span>
@@ -27,7 +23,6 @@
 <div
   class="transition-max-height overflow-hidden px-2 text-slate-900 duration-300 ease-in-out dark:text-white"
   [style.maxHeight]="open() ? '200px' : '0'"
-  [style.paddingTop]="open() ? '0.5rem' : '0'"
   [style.paddingBottom]="open() ? '1rem' : '0'"
 >
   @if (levelEarnings() >= earningsStore.earnings.maxGgt()) {
@@ -35,7 +30,7 @@
       At this level you exceed the maximum GGT amout you can earn per day.
     </app-alert>
   }
-  <div class="grid grid-cols-1 gap-2 md:grid-cols-2">
+  <div class="grid grid-cols-1 gap-2 lg:grid-cols-2">
     <div class="space-y-1">
       <div>
         <span class="font-semibold">Level Up Cost: </span>
@@ -66,7 +61,10 @@
         <span class="font-semibold">Earnings: </span>
         <span>{{ levelEarnings() }}</span>
         @if (levelEarnings() > 0) {
-          <app-trend-badge [change]="earningsPercentage()" />
+          <app-trend-badge
+            [change]="earningsPercentage()"
+            title="Compared with the current earnings"
+          />
         }
       </div>
     </div>

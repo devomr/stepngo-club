@@ -10,4 +10,5 @@ import { Component, input } from '@angular/core';
 })
 export class TrendBadgeComponent {
   change = input.required<number>();
+  title = input<string>();
 }
