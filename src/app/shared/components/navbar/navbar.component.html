@@ -71,15 +71,53 @@
       <div class="hidden lg:ml-6 lg:block">
         <div class="flex space-x-2">
           @for (item of menuItems; track item.text) {
-            <a
-              [href]="item.link"
-              (click)="onNavLinkClick(item.text)"
-              class="rounded-md px-3 py-2 font-medium text-slate-900 transition duration-300 ease-in-out hover:scale-105 hover:bg-color-primary hover:text-white dark:text-white"
-              [title]="item.text"
-              [attr.aria-current]="item.isActive ? 'page' : null"
-            >
-              {{ item.text }}
-            </a>
+            @if (item.submenu) {
+              <div class="group relative" [title]="item.text">
+                <a
+                  href="#"
+                  class="flex items-center rounded-md px-3 py-2 font-medium text-slate-900 hover:bg-color-primary hover:text-white dark:text-white"
+                  (click)="$event.preventDefault()"
+                >
+                  {{ item.text }}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="ml-2 h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </a>
+                <div
+                  class="absolute top-[32px] z-50 mt-2 hidden w-48 overflow-hidden rounded-md bg-white shadow-lg group-hover:block dark:bg-slate-800"
+                >
+                  @for (subItem of item.submenu; track $index) {
+                    <a
+                      [href]="subItem.link"
+                      class="block px-4 py-2 text-slate-900 hover:bg-color-primary hover:text-white dark:text-white"
+                    >
+                      {{ subItem.text }}
+                    </a>
+                  }
+                </div>
+              </div>
+            } @else {
+              <a
+                [href]="item.link"
+                (click)="onNavLinkClick(item.text)"
+                class="rounded-md px-3 py-2 font-medium text-slate-900 transition duration-300 ease-in-out hover:scale-105 hover:bg-color-primary hover:text-white dark:text-white"
+                [title]="item.text"
+                [attr.aria-current]="item.isActive ? 'page' : null"
+              >
+                {{ item.text }}
+              </a>
+            }
           }
           <app-theme-toggle />
         </div>
@@ -92,16 +130,58 @@
     id="mobile-menu"
   >
     <div class="space-y-1 px-2 pb-3 pt-2">
-      @for (item of menuItems; track item.text) {
-        <a
-          [href]="item.link"
-          (click)="onNavLinkClick(item.text)"
-          class="block rounded-md px-3 py-2 font-medium text-slate-900 hover:bg-color-primary hover:text-white dark:text-white"
-          [attr.aria-current]="item.isActive ? 'page' : null"
-          [title]="item.text"
-        >
-          {{ item.text }}
-        </a>
+      @for (item of menuItems; track item.text; let idx = $index) {
+        @if (item.submenu) {
+          <button
+            type="button"
+            class="flex w-full items-center justify-between rounded-md px-3 py-2 text-left font-medium text-slate-900 hover:bg-color-primary hover:text-white dark:text-white"
+            (click)="toggleSubmenu(idx)"
+          >
+            {{ item.text }}
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4"
+              [class.transform]="item.isSubmenuOpen ? 'rotate-180' : ''"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+          <div
+            [ngClass]="{
+              hidden: !item.isSubmenuOpen,
+              block: item.isSubmenuOpen,
+            }"
+            class="space-y-1 px-3"
+          >
+            @for (subItem of item.submenu; track $index) {
+              <a
+                [href]="subItem.link"
+                class="block rounded-md px-3 py-2 text-slate-900 hover:bg-color-primary hover:text-white dark:text-white"
+              >
+                {{ subItem.text }}
+              </a>
+            }
+          </div>
+        } @else {
+          <a
+            [href]="item.link"
+            (click)="onNavLinkClick(item.text)"
+            class="block rounded-md px-3 py-2 font-medium text-slate-900 hover:bg-color-primary hover:text-white dark:text-white"
+            [attr.aria-current]="item.isActive ? 'page' : null"
+            [title]="item.text"
+          >
+            {{ item.text }}
+          </a>
+        }
       }
     </div>
   </div>

@@ -8,6 +8,8 @@ type MenuItem = {
   text: string;
   isActive: boolean;
   link: string;
+  submenu?: { text: string; link: string }[];
+  isSubmenuOpen?: boolean;
 };
 
 @Component({
@@ -29,6 +31,16 @@ export class NavbarComponent {
       text: 'Earnings Calculator',
       isActive: false,
       link: '',
+    },
+    {
+      text: 'Tools',
+      isActive: false,
+      link: '',
+      submenu: [
+        { text: 'Haus Calculator', link: 'haus-calculator' },
+        { text: 'Mint Calculator', link: 'mint-calculator' },
+      ],
+      isSubmenuOpen: false,
     },
     {
       text: 'Dashboard',
@@ -54,6 +66,13 @@ export class NavbarComponent {
 
   toggleMenu(): void {
     this.isMenuExpanded = !this.isMenuExpanded;
+  }
+
+  toggleSubmenu(index: number): void {
+    const menuItem = this.menuItems[index];
+    if (menuItem && menuItem.submenu) {
+      menuItem.isSubmenuOpen = !menuItem.isSubmenuOpen;
+    }
   }
 
   onNavLinkClick(label: string): void {
