@@ -46,7 +46,7 @@ export const SEO_CONFIG = {
       changeFrequency: 'daily',
     },
     HAUS_CALCULATOR_PAGE: {
-      title: 'HAUS Calculator',
+      title: 'Haus Calculator',
       description: APP_DESCRIPTION,
       image: {
         url: 'assets/stepngoclub-cover.png',
