@@ -11,5 +11,6 @@ export type HausContract = {
     host: number;
     guest: number;
     total: number;
+    mintQuota: number;
   };
 };

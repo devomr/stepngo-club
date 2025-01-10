@@ -11,11 +11,12 @@ import { HausStore } from './store/haus.store';
 import { CurrencyPipe } from '@angular/common';
 import { TokensStore } from '@shared/stores/tokens.store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { InfoTooltipComponent } from '@shared/components/info-tooltip/info-tooltip.component';
 
 @Component({
   selector: 'app-haus-calculator',
   standalone: true,
-  imports: [CurrencyPipe, ReactiveFormsModule],
+  imports: [CurrencyPipe, ReactiveFormsModule, InfoTooltipComponent],
   providers: [HausStore],
   templateUrl: './haus-calculator.component.html',
   styleUrl: './haus-calculator.component.css',

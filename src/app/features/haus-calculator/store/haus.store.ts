@@ -28,6 +28,7 @@ const initialState: HausState = {
       host: 0,
       guest: 0,
       total: 0,
+      mintQuota: 0,
     },
   },
   isLoading: false,
@@ -104,11 +105,15 @@ export const HausStore = signalStore(
 
         const hostEarnings = ggtEarnings * (contract.hostProfit / 100);
         const gustEarnings = ggtEarnings * (contract.guestProfit / 100);
+        const mintQuota = Math.floor(
+          (contract.energy * contract.duration) / 15,
+        );
 
         return {
           contract: {
             ...state.contract,
             earnings: {
+              mintQuota: mintQuota,
               host: hostEarnings,
               guest: gustEarnings,
               total: ggtEarnings,

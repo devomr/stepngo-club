@@ -1,5 +1,10 @@
 <main class="bg-gray-100 py-6 dark:bg-slate-900">
   <div class="container">
+    <h1
+      class="mb-4 text-center text-2xl font-bold tracking-tight text-slate-900 dark:text-white md:text-left md:text-3xl"
+    >
+      StepnGO Haus Calculator
+    </h1>
     <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
       <form [formGroup]="hausForm">
         <div class="rounded-lg bg-white p-4 shadow-md dark:bg-slate-800">
@@ -70,7 +75,7 @@
               for="energy"
               class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
             >
-              Daily Energy Shared:
+              Daily Energy Shared
             </label>
             <select
               id="energy"
@@ -88,7 +93,7 @@
               for="duration"
               class="mb-1 block text-sm font-medium text-slate-900 dark:text-white"
             >
-              Duration:
+              Duration
             </label>
             <select
               id="duration"
@@ -185,6 +190,22 @@
                   title="GGT"
                 />
               </div>
+            </div>
+          </div>
+          <div class="mt-4">
+            <div class="flex justify-between text-slate-900 dark:text-white">
+              <div
+                class="flex items-center gap-1 font-semibold"
+                data-tooltip-target="tooltip-ggt-limit"
+              >
+                Total Mint Quota
+                <app-info-tooltip
+                  message="1 mint quota is accumulated for every 15 energy consumed"
+                />
+              </div>
+              <span class="font-bold">
+                {{ hausStore.contract.earnings().mintQuota }} Mint Quota
+              </span>
             </div>
           </div>
         </div>
