@@ -12,15 +12,16 @@
 </app-alert>
 <div class="relative overflow-x-auto">
   <table
-    class="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right"
+    class="w-full text-left text-sm text-slate-900 dark:text-white rtl:text-right"
   >
     <thead
-      class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+      class="bg-gray-50 text-xs uppercase text-slate-800 dark:bg-gray-700 dark:text-white"
     >
       <tr>
-        <th scope="col" class="px-6 py-3">Sneakers Burned</th>
+        <th scope="col" class="px-6 py-3">Energy Cap Increase</th>
+        <th scope="col" class="px-6 py-3">Sneakers Burned To Increase Cap</th>
+        <th scope="col" class="px-6 py-3">Accumulated Sneakers Burned</th>
         <th scope="col" class="px-6 py-3">Total Energy Acquired</th>
-        <th scope="col" class="px-6 py-3">Energy Cap</th>
       </tr>
     </thead>
     <tbody>
@@ -28,8 +29,6 @@
         <tr
           class="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800"
         >
-          <td class="px-6 py-4">{{ item.sneakers }}</td>
-          <td class="px-6 py-4">{{ item.totalEnergy }}</td>
           <td class="px-6 py-4">
             <div class="flex items-center gap-2">
               {{ $index === 0 ? 0 : item.energyCap - 1 }}
@@ -50,6 +49,9 @@
               {{ item.energyCap }}
             </div>
           </td>
+          <td class="px-6 py-4">{{ item.sneakers }}</td>
+          <td class="px-6 py-4">{{ item.totalSneakers }}</td>
+          <td class="px-6 py-4">{{ item.totalEnergy }}</td>
         </tr>
       }
     </tbody>

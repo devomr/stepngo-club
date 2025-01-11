@@ -11,46 +11,57 @@
   </a>
 </app-alert>
 
-<table
-  class="w-full text-left text-sm text-gray-500 dark:text-gray-400 rtl:text-right"
->
-  <thead
-    class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+<div class="relative overflow-x-auto">
+  <table
+    class="w-full text-left text-sm text-slate-900 dark:text-white rtl:text-right"
   >
-    <tr>
-      <th scope="col" class="px-6 py-3">Level</th>
-      <th scope="col" class="px-6 py-3">Duration (in hours)</th>
-      <th scope="col" class="px-6 py-3">Cost (only GGT required)</th>
-    </tr>
-  </thead>
-  <tbody>
-    @for (item of data; track $index) {
-      <tr
-        class="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800"
-      >
-        <td class="px-6 py-4">
-          <div class="flex items-center gap-2">
-            {{ item.level - 1 }}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-4"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
-              />
-            </svg>
-            {{ item.level }}
-          </div>
-        </td>
-        <td class="px-6 py-4">{{ item.level }} hr</td>
-        <td class="px-6 py-4">{{ item.cost }} GGT</td>
+    <thead
+      class="bg-gray-50 text-xs uppercase text-slate-800 dark:bg-gray-700 dark:text-white"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3">Level Increase</th>
+        <th scope="col" class="px-6 py-3">Level Up Cost</th>
+        <th scope="col" class="px-6 py-3">Accumulated Cost</th>
+        <th scope="col" class="px-6 py-3">Level Up Duration</th>
+        <th scope="col" class="px-6 py-3">Accumulated Duration</th>
       </tr>
-    }
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      @for (item of data; track $index) {
+        <tr
+          class="border-b odd:bg-white even:bg-gray-50 dark:border-gray-700 odd:dark:bg-gray-900 even:dark:bg-gray-800"
+        >
+          <td class="px-6 py-4">
+            <div class="flex items-center gap-2">
+              {{ item.level - 1 }}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-4"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+                />
+              </svg>
+              {{ item.level }}
+            </div>
+          </td>
+          <td class="px-6 py-4">{{ item.cost }} GGT</td>
+          <td class="px-6 py-4">{{ item.totalCost }} GGT</td>
+          <td class="px-6 py-4">
+            {{ item.duration }} {{ item.duration === 1 ? "hour" : "hours" }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.totalDuration }}
+            {{ item.totalDuration === 1 ? "hour" : "hours" }}
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
