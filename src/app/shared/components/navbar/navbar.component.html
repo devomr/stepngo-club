@@ -101,6 +101,7 @@
                     <a
                       [title]="subItem.text"
                       [href]="subItem.link"
+                      (click)="onNavLinkClick(subItem.text)"
                       class="block px-4 py-2 text-slate-900 hover:bg-color-primary hover:text-white dark:text-white"
                     >
                       {{ subItem.text }}
@@ -167,6 +168,7 @@
               <a
                 [title]="subItem.text"
                 [href]="subItem.link"
+                (click)="onNavLinkClick(subItem.text)"
                 class="block rounded-md px-3 py-2 text-slate-900 hover:bg-color-primary hover:text-white dark:text-white"
               >
                 {{ subItem.text }}
