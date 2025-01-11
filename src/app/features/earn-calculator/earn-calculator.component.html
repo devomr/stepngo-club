@@ -84,15 +84,15 @@
           </div>
           <div>
             <table
-              class="w-full text-left text-sm text-gray-900 dark:text-white rtl:text-right"
+              class="w-full text-left text-sm text-slate-900 dark:text-white rtl:text-right"
             >
               <thead
-                class="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400"
+                class="bg-gray-50 text-xs uppercase text-slate-800 dark:bg-gray-700 dark:text-white"
               >
                 <tr>
                   <th scope="col" class="p-2">Attributes</th>
-                  <th scope="col" class="p-2">Base</th>
-                  <th scope="col" class="p-2">Level Points</th>
+                  <th scope="col" class="p-2 text-center">Base</th>
+                  <th scope="col" class="p-2 text-center">Level Points</th>
                 </tr>
               </thead>
               <tbody>
@@ -114,14 +114,19 @@
                         (click)="onMaxPoints('Efficiency')"
                         [disabled]="earningsStore.levelPoints() === 0"
                       >
-                        Max Points
+                        <span class="inline sm:hidden md:inline lg:hidden">
+                          Max
+                        </span>
+                        <span class="hidden sm:inline md:hidden lg:inline">
+                          Max Points
+                        </span>
                       </button>
                     </div>
                   </th>
                   <td class="w-20 p-2">
                     <input
                       type="number"
-                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-center text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                       placeholder="1-10"
                       min="1"
                       max="10"
@@ -132,7 +137,7 @@
                   <td class="w-20 p-2">
                     <input
                       type="number"
-                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-70 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-center text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-70 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
                       [placeholder]="'0-' + earningsStore.levelPoints()"
                       formControlName="efficiencyLevelPoints"
                       required
